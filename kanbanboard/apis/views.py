@@ -74,4 +74,4 @@ class DeleteUsers(APIView):
         user.delete()
         return JsonResponse("Deleted User", safe=False)
     
-#
+# Implement remaining tables using the same methods!
