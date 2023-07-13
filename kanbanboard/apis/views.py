@@ -303,7 +303,7 @@ class BoardTB(GetData, PostData, PutData, DeleteData):
             if serialized.is_valid():
                 serialized.save()
                 return JsonResponse(serialized.data, status = status.HTTP_200_OK, safe=False)  
-            return JsonResponse("Board can't be updated", status = status.HTTP_400_BAD_REQUEST)
+            return JsonResponse("Board cannot be updated", status = status.HTTP_400_BAD_REQUEST)
         except ValueError:
             return JsonResponse("Please enter a valid board_id", status = status.HTTP_400_BAD_REQUEST)
     
