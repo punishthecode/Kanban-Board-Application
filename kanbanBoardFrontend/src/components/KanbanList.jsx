@@ -6,7 +6,7 @@ function KanbanList() {
   return (
     <Box
       marginRight={"10%"}
-      width={"200%"}
+      width={"216px"}
       height={"637px"}
       backgroundColor={"#eeeeee"}
     >
