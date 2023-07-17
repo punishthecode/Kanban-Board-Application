@@ -5,14 +5,21 @@ import KanbanList from "../components/KanbanList";
 import KanbanTaskModal from "./KanbanTaskModal";
 
 function KanbanBoard() {
-  const [list, setList] = useState([]);
+  const [count, setCount] = useState([]);
+  const [lists, setLists] = useState([]);
+
+  const fetchData = async () => {
+    const listResponse = await fetch("http://127.0.0.1:8000/kanban/lists");
+    const taskResponse = await fetch("http://127.0.0.1:8000/kanban/tasks/");
+    const listJson = await listResponse.json();
+    const taskJson = await taskResponse.json();
+    setLists(listJson);
+    setCount(taskJson);
+  };
   useEffect(() => {
-    setList([
-      { id: 1, text: "Not started(1)" },
-      { id: 2, text: "In progress(2)" },
-      { id: 3, text: "Completed(3)" },
-    ]);
+    fetchData();
   }, []);
+
   return (
     <Box margin={"5%"}>
       <Text fontSize={"36px"} fontWeight={"400"}>
@@ -23,10 +30,13 @@ function KanbanBoard() {
       </Text>
       <KanbanTaskModal />
       <Box marginTop={"3%"} display={"flex"}>
-        {list.map((item) => (
-          <Box marginRight={"3%"} key={item.id}>
-            <Text fontSize={"16px"}>{item.text}</Text>
-            <KanbanList />
+        {lists.map((lists, i) => (
+          <Box key={i} marginRight={"3%"}>
+            <Text fontSize={"16px"}>
+              {lists.col_name} (
+              {count.filter((task) => task.column === lists.column_id).length})
+            </Text>
+            <KanbanList column={lists.column_id} />
           </Box>
         ))}
       </Box>

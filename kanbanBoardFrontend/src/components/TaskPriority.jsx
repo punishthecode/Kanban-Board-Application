@@ -2,8 +2,8 @@ import React from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import { Text } from "@chakra-ui/react";
 
-function TaskPriority() {
-  if (1 === 2) {
+function TaskPriority({ priority }) {
+  if (priority >= 3) {
     return (
       <>
         <ChevronDownIcon width={4} height={4} color={"#30ad53"} />
@@ -12,7 +12,7 @@ function TaskPriority() {
         </Text>
       </>
     );
-  } else if (1 === 1) {
+  } else if (priority == 1) {
     return (
       <>
         <ChevronUpIcon width={"4"} height={"4"} color={"#cb2a2a"} />

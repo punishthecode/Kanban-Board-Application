@@ -6,7 +6,7 @@ from django.http import JsonResponse, JsonResponse
 from .models import *
 from rest_framework import generics, status
 from rest_framework.views import APIView
-Create your views here.
+#Create your views here.
 
 #Board
 class GetBoard(APIView):
@@ -38,7 +38,7 @@ class DeleteBoard(APIView):
         board.delete()
         return JsonResponse("Deleted User", safe=False)
     
-class GetBoardId(APIView):
+class GetBoardById(APIView):
     def get(self, request, input_board_id):
             board = Board.objects.filter(board_id = input_board_id)
             serialized = BoardSerializer(board, many = True)
@@ -74,7 +74,7 @@ class DeleteUsers(APIView):
         user.delete()
         return JsonResponse("Deleted User", safe=False)
     
-class GetUserId(APIView):
+class GetUserById(APIView):
     def get(self, request, input_user_id):
         user = User.objects.filter(user_id = input_user_id)
         serialized = UserSerializer(user, many = True)
@@ -110,7 +110,7 @@ class DeleteTasks(APIView):
         task.delete()
         return JsonResponse("Deleted Task", safe=False)
     
-class GetTaskId(APIView):
+class GetTaskById(APIView):
     def get(self, request, input_task_id):
         task = Task.objects.filter(task_id = input_task_id)
         serialized = TaskSerializer(task, many = True)
@@ -147,7 +147,7 @@ class DeleteCommits(APIView):
         commit.delete()
         return JsonResponse("Deleted Commit", safe=False)
     
-class GetCommitId(APIView):
+class GetCommitById(APIView):
     def get(self, request, input_commit_id):
         commit = Commit.objects.filter(commit_id = input_commit_id)
         serialized = CommitSerializer(commit, many = True)
@@ -184,7 +184,7 @@ class DeleteLists(APIView):
         list.delete()
         return JsonResponse("Deleted List", safe=False)
     
-class GetListId(APIView):
+class GetListById(APIView):
     def get(self, request, input_list_id):
         list = List.objects.filter(list_id = input_list_id)
         serialized = ListSerializer(list, many = True)
