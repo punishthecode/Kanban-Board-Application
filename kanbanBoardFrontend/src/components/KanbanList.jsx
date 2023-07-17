@@ -7,7 +7,7 @@ function KanbanList() {
     <Box
       marginRight={"10%"}
       width={"216px"}
-      height={"637px"}
+      height={"698px"}
       backgroundColor={"#eeeeee"}
     >
       <KanbanTask />

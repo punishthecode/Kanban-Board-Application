@@ -52,11 +52,18 @@ function KanbanTaskModal() {
         <ModalContent>
           <ModalHeader>
             <Text paddingLeft={"10px"} fontSize={"26px"} fontWeight={"400"}>
-              Clean office space
+              Create new task
             </Text>
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
+            <Input
+              type={"text"}
+              marginLeft={"10px"}
+              placeholder="Task title"
+              width={"50%"}
+              marginBottom={"10px"}
+            ></Input>
             <Box display={"flex"}>
               <Box paddingLeft={"10px"}>
                 <Text
@@ -118,12 +125,13 @@ function KanbanTaskModal() {
                   >
                     Story points
                   </FormLabel>
-                  <Select
+                  <Input
                     borderRadius={"4px"}
+                    type={"text"}
                     height={"32px"}
                     width={"185px"}
                     ref={initialRef}
-                    placeholder="Select story points"
+                    placeholder="Input story points"
                     fontSize={"12px"}
                   />
                 </FormControl>
