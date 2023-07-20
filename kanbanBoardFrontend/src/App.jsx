@@ -1,13 +1,23 @@
 import * as React from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import KanbanBoard from "./pages/KanbanBoard";
+import LoginPage from "./pages/LoginPage";
 import "./App.css";
 
 function App() {
-  // 2. Wrap ChakraProvider at the root of your app
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      exact: true,
+      element: <LoginPage />,
+    },
+    { path: "/kanban", exact: true, element: <KanbanBoard /> },
+  ]);
+
   return (
     <ChakraProvider>
-      <KanbanBoard />
+      <RouterProvider router={router} />
     </ChakraProvider>
   );
 }
