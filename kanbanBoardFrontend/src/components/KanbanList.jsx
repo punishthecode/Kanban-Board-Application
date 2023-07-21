@@ -19,6 +19,7 @@ function KanbanList({ column }) {
       width={"216px"}
       height={"400px"}
       backgroundColor={"#eeeeee"}
+      scrollBehavior={"inside"}
     >
       <KanbanTask column_id={column} />
     </Box>

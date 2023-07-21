@@ -3,6 +3,8 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import KanbanBoard from "./pages/KanbanBoard";
 import LoginPage from "./pages/LoginPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import SignupPage from "./pages/SignupPage";
 import "./App.css";
 
 function App() {
@@ -12,7 +14,9 @@ function App() {
       exact: true,
       element: <LoginPage />,
     },
-    { path: "/kanban", exact: true, element: <KanbanBoard /> },
+    { path: "/kanban", element: <KanbanBoard /> },
+    { path: "*", element: <NotFoundPage /> },
+    { path: "/signup", element: <SignupPage /> },
   ]);
 
   return (

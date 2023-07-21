@@ -12,7 +12,6 @@ function KanbanTask({ column_id }) {
     const response = await fetch("http://127.0.0.1:8000/kanban/tasks/");
     const resultJson = await response.json();
     setTasks(resultJson);
-    // console.log(resultJson);
   };
 
   useEffect(() => {
@@ -20,7 +19,6 @@ function KanbanTask({ column_id }) {
   }, []);
 
   const column = tasks.filter((task) => task.column === column_id);
-  // const count = column.length;
 
   return (
     <Box

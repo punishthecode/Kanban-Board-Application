@@ -11,15 +11,31 @@ import {
   Image,
 } from "@chakra-ui/react";
 import "../App.css";
+import axios from "axios";
 
-function LoginPage() {
+function SignupPage() {
   const [credentials, setCredentials] = useState({
+    username: "",
     email: "",
     pass_field: "",
   });
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
+  const fetchCredentials = async () => {
+    const response = await fetch("http://127.0.0.1:8000/kanban/users/");
+    const resultJson = await response.json();
+    setUsers(resultJson);
+    console.log(resultJson);
+  };
+  useEffect(() => {
+    fetchCredentials();
+  }, []);
+
+  function GoBack(e) {
+    e.preventDefault();
+    navigate("/");
+  }
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCredentials((prevFormData) => {
@@ -30,41 +46,20 @@ function LoginPage() {
     });
   };
 
-  const navigateToSignUp = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    navigate("/signup");
-  };
-
-  const fetchCredentials = async () => {
-    const response = await fetch("http://127.0.0.1:8000/kanban/users/");
-    const resultJson = await response.json();
-    setUsers(resultJson);
-    console.log(resultJson);
-  };
-
-  useEffect(() => {
-    fetchCredentials();
-  }, []);
-
-  function checkCredentials(e) {
-    e.preventDefault();
-    const validate = users.filter(
-      (user) =>
-        user.email === credentials.email &&
-        user.pass_field === credentials.pass_field
-    );
-    console.log(validate);
-    if (validate.length != 0) {
-      navigate("/kanban", {
-        state: {
-          username: validate[0].username,
-          user_id: validate[0].user_id,
-        },
-      });
+    if (users.filter((user) => user.email === credentials.email).length != 0) {
+      alert("Email already registered");
     } else {
-      alert("Invalid Credentials");
+      const response = await axios.post(
+        "http://127.0.0.1:8000/kanban/users/",
+        credentials
+      );
+      console.log(response);
+      alert("Registered successfully");
+      navigate("/");
     }
-  }
+  };
   return (
     <Center height={"100vh"}>
       <Box
@@ -85,9 +80,27 @@ function LoginPage() {
             fontSize={"16px"}
             paddingBottom={"10px"}
           >
-            Login
+            Register
           </Text>
-          <form onSubmit={checkCredentials}>
+          <form onSubmit={handleRegister}>
+            <FormControl paddingBottom={"20px"} isRequired>
+              <FormLabel
+                fontSize={"14px"}
+                fontWeight={"400"}
+                color={"rgba(0,0,0,0.50"}
+              >
+                Username
+              </FormLabel>
+              <Input
+                boxShadow={"4px 4px 10px rgba(0, 0, 255, 0.1)"}
+                fontSize={"14px"}
+                placeholder="mrkanbanboard"
+                type="text"
+                name="username"
+                value={credentials.username}
+                onChange={handleChange}
+              />
+            </FormControl>
             <FormControl paddingBottom={"20px"} isRequired>
               <FormLabel
                 fontSize={"14px"}
@@ -126,7 +139,6 @@ function LoginPage() {
             </FormControl>
             <Center display={"flex"} justifyContent={"flex-end"}>
               <Button
-                type={"submit"}
                 color={"#ffffff"}
                 width={"79px"}
                 height={"30px"}
@@ -135,8 +147,9 @@ function LoginPage() {
                 background={"#2a4ecb"}
                 fontWeight={"400"}
                 _hover={{ bg: "#2a4fff" }}
+                onClick={GoBack}
               >
-                Login
+                Go Back
               </Button>
               <Button
                 background={"transparent"}
@@ -144,7 +157,7 @@ function LoginPage() {
                 fontSize={"14px"}
                 fontWeight={"400"}
                 color={"rgba(0,0,0,0.50)"}
-                onClick={navigateToSignUp}
+                type={"submit"}
               >
                 Register
               </Button>
@@ -156,4 +169,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default SignupPage;
