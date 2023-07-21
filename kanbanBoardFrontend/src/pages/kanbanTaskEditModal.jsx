@@ -118,6 +118,8 @@ function KanbanTaskEditModal({
                   <Text>Story points: {story_points}</Text>
                   <Text>Assigner ID: {assigner}</Text>
                   <Text>Assignee ID: {assignee}</Text>
+                  <Text>Created at: {created_at}</Text>
+                  <Text>Updated at: {updated_at}</Text>
                 </Box>
                 <Box display={"flex"} justifyContent={"flex-end"} bottom={0}>
                   <Button
