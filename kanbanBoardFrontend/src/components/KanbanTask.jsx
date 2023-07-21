@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Box, Icon, Text, useDisclosure, Modal } from "@chakra-ui/react";
+import {
+  Box,
+  Icon,
+  Text,
+  useDisclosure,
+  Modal,
+  Input,
+  InputGroup,
+  InputLeftElement,
+} from "@chakra-ui/react";
+import { SearchIcon } from "@chakra-ui/icons";
 import TaskPriority from "./TaskPriority";
 import KanbanTaskEditModal from "../pages/kanbanTaskEditModal";
 import "../App.css";
@@ -19,6 +29,13 @@ function KanbanTask({ column_id }) {
   }, []);
 
   const column = tasks.filter((task) => task.column === column_id);
+  const sortedColumns = column.sort((a, b) => a.priority - b.priority);
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredTasks = sortedColumns.filter((task) =>
+    task.task_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <Box
@@ -28,7 +45,26 @@ function KanbanTask({ column_id }) {
       marginRight={"5%"}
       marginTop={"5%"}
     >
-      {column.map((tasks, i) => (
+      <InputGroup
+        width={"100%"}
+        size={"sm"}
+        marginBottom={"5%"}
+        fontWeight={"400"}
+        _hover={{ border: "#2a4fff" }}
+        fontSize={"14px"}
+      >
+        <InputLeftElement
+          pointerEvents="none"
+          children={<Icon as={SearchIcon} color="gray.300" />}
+        />
+        <Input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search tasks"
+        />
+      </InputGroup>
+      {filteredTasks.map((tasks, i) => (
         <Box
           key={tasks.task_id}
           backgroundColor={"#ffffff"}
