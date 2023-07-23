@@ -3,8 +3,8 @@ from .views import *
 
 #API urls for CRUD operations.
 urlpatterns = [
-     path('boards/', BoardTB.as_view(), name = "Boards"),
-     path('boards/<str:pk>/', BoardTB.as_view(), name = "BoardsById"),
+     # path('boards/', BoardTB.as_view(), name = "Boards"),
+     # path('boards/<str:pk>/', BoardTB.as_view(), name = "BoardsById"),
      path('users/', UserTB.as_view(), name = 'Users'),
      path('users/<str:pk>/', UserTB.as_view(), name = "UsersByID"),
      path('lists/', ListTB.as_view(), name = "Lists"),

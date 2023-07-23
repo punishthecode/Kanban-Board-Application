@@ -26,46 +26,46 @@ class DeleteData(APIView):
         pass
 
 # Board CRUD operations - Not used.
-class BoardTB(GetData, PostData, PutData, DeleteData):
-    def get(self, request, pk=None):
-        if pk == None:
-            boards = Board.objects.all()
-            serialized = BoardSerializer(boards, many=True)
-            return JsonResponse(serialized.data, status = status.HTTP_200_OK, safe=False)
-        try:
-            boards = Board.objects.filter(board_id = pk)
-            if boards.exists():
-                serialized = BoardSerializer(boards, many = True)
-                return JsonResponse(serialized.data, status = status.HTTP_200_OK,  safe=False)
-            return JsonResponse(f"Board {pk} does not exist", status = status.HTTP_400_BAD_REQUEST, safe=False)
-        except ValueError:
-            return JsonResponse("board_id incorrect, Please enter correct key", status = status.HTTP_400_BAD_REQUEST, safe=False)
+# class BoardTB(GetData, PostData, PutData, DeleteData):
+#     def get(self, request, pk=None):
+#         if pk == None:
+#             boards = Board.objects.all()
+#             serialized = BoardSerializer(boards, many=True)
+#             return JsonResponse(serialized.data, status = status.HTTP_200_OK, safe=False)
+#         try:
+#             boards = Board.objects.filter(board_id = pk)
+#             if boards.exists():
+#                 serialized = BoardSerializer(boards, many = True)
+#                 return JsonResponse(serialized.data, status = status.HTTP_200_OK,  safe=False)
+#             return JsonResponse(f"Board {pk} does not exist", status = status.HTTP_400_BAD_REQUEST, safe=False)
+#         except ValueError:
+#             return JsonResponse("board_id incorrect, Please enter correct key", status = status.HTTP_400_BAD_REQUEST, safe=False)
     
-    def post(self, request):
-        serialized = BoardSerializer(data = request.data)
-        try:
-            if serialized.is_valid() :
-                serialized.save()
-                return JsonResponse(serialized.data, status = status.HTTP_200_OK, safe=False)        
-            return JsonResponse("Board already exists", status = status.HTTP_400_BAD_REQUEST, safe=False)
-        except ValueError:
-            return JsonResponse("Please enter a valid board_id", status = status.HTTP_400_BAD_REQUEST)
+#     def post(self, request):
+#         serialized = BoardSerializer(data = request.data)
+#         try:
+#             if serialized.is_valid() :
+#                 serialized.save()
+#                 return JsonResponse(serialized.data, status = status.HTTP_200_OK, safe=False)        
+#             return JsonResponse("Board already exists", status = status.HTTP_400_BAD_REQUEST, safe=False)
+#         except ValueError:
+#             return JsonResponse("Please enter a valid board_id", status = status.HTTP_400_BAD_REQUEST)
     
-    def put(self, request, pk):
-        boards = Board.objects.get(board_id = pk)
-        serialized = BoardSerializer(boards, data = request.data)
-        try:
-            if serialized.is_valid():
-                serialized.save()
-                return JsonResponse(serialized.data, status = status.HTTP_200_OK, safe=False)  
-            return JsonResponse("Board cannot be updated", status = status.HTTP_400_BAD_REQUEST)
-        except ValueError:
-            return JsonResponse("Please enter a valid board_id", status = status.HTTP_400_BAD_REQUEST)
+#     def put(self, request, pk):
+#         boards = Board.objects.get(board_id = pk)
+#         serialized = BoardSerializer(boards, data = request.data)
+#         try:
+#             if serialized.is_valid():
+#                 serialized.save()
+#                 return JsonResponse(serialized.data, status = status.HTTP_200_OK, safe=False)  
+#             return JsonResponse("Board cannot be updated", status = status.HTTP_400_BAD_REQUEST)
+#         except ValueError:
+#             return JsonResponse("Please enter a valid board_id", status = status.HTTP_400_BAD_REQUEST)
     
-    def delete(self, request, pk):
-        boards = Board.objects.get(board_id = pk)
-        boards.delete()
-        return JsonResponse("Deleted Board", status = status.HTTP_200_OK, safe=False)
+#     def delete(self, request, pk):
+#         boards = Board.objects.get(board_id = pk)
+#         boards.delete()
+#         return JsonResponse("Deleted Board", status = status.HTTP_200_OK, safe=False)
 
     
 # User CRUD operations.

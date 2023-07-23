@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'kanbanboard.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'kanban_board_v1',
+        'NAME': 'kanban_board_v2',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost', # typically 'localhost' or '127.0.0.1'

@@ -8,6 +8,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Select,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import TaskPriority from "./TaskPriority";
@@ -18,6 +19,16 @@ import "../App.css";
 function KanbanTask({ column_id }) {
   const [tasks, setTasks] = useState([]);
   const [selectedCard, setSelectedCard] = useState([]);
+
+  // Code to handle change in sorting order
+  const [order, setOrder] = useState("desc");
+  const handleSort = (e) => {
+    setOrder(e.target.value);
+  };
+
+  useEffect(() => {
+    sortTasks();
+  }, [order]);
 
   // Custom hook to handle the modal views
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -36,9 +47,15 @@ function KanbanTask({ column_id }) {
   // Filtering tasks based on column_id
   const column = tasks.filter((task) => task.column === column_id);
 
-  // Sorting tasks based on priority
-  const sortedColumns = column.sort((a, b) => a.priority - b.priority);
-
+  // Sorting tasks based on priority in ascending or descending order
+  function sortTasks() {
+    if (order === "desc") {
+      return column.sort((a, b) => a.priority - b.priority);
+    } else {
+      return column.sort((a, b) => b.priority - a.priority);
+    }
+  }
+  const sortedColumns = sortTasks();
   // Search function for searching tasks within each column/list
   const [searchQuery, setSearchQuery] = useState("");
   const filteredTasks = sortedColumns.filter((task) =>
@@ -77,6 +94,26 @@ function KanbanTask({ column_id }) {
           placeholder="Search tasks"
         />
       </InputGroup>
+      <Box>
+        <Select
+          fontSize={"13px"}
+          fontWeight={"400"}
+          color={"gray.600"}
+          size={"sm"}
+          width={"100%"}
+          marginBottom={"5%"}
+          _hover={{
+            border: "transparent",
+            transform: "scale(1.05)",
+            boxShadow: "4px 4px 10px rgba(0, 0, 255, 0.1)",
+          }}
+          value={order}
+          onChange={handleSort}
+        >
+          <option value="asc">Priority: Low to High</option>
+          <option value="desc">Priority: High to Low</option>
+        </Select>
+      </Box>
       {filteredTasks.map((tasks, i) => (
         <Box
           key={tasks.task_id}

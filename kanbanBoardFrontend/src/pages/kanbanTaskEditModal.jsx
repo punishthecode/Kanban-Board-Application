@@ -73,18 +73,18 @@ function KanbanTaskEditModal({
   // Setting form defaults
   const currentTime = new Date();
   const [formData, setformData] = useState({
-    task_id: 1,
-    column: 1,
+    task_id: task_id,
+    column: column,
     task_name: task_name,
-    description: "",
-    acceptance_criteria: "",
-    assigner: "",
-    assignee: "",
-    story_points: "",
-    start_date: "",
-    end_date: "",
-    priority: "",
-    created_at: "",
+    description: description,
+    acceptance_criteria: acceptance_criteria,
+    assigner: assigner,
+    assignee: assignee,
+    story_points: story_points,
+    start_date: start_date,
+    end_date: end_date,
+    priority: priority,
+    created_at: created_at,
     updated_at: currentTime.toISOString(),
   });
 

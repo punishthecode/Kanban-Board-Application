@@ -1,20 +1,21 @@
 from django.db import models
 
 #Board model - future implementation
-class Board(models.Model):
-    board_id = models.AutoField(primary_key=True)
-    board_name = models.CharField(max_length=255, blank=True, null=True)
-    user = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=True)
-    created_at = models.DateTimeField(blank=True, null=True, auto_now_add=True)
-    updated_at = models.DateTimeField(blank=True, null=True, auto_now_add=True)
+# class Board(models.Model):
+#     board_id = models.AutoField(primary_key=True)
+#     board_name = models.CharField(max_length=255, blank=True, null=True)
+#     user = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=True)
+#     created_at = models.DateTimeField(blank=True, null=True, auto_now_add=True)
+#     updated_at = models.DateTimeField(blank=True, null=True, auto_now_add=True)
 
-    class Meta:
-        managed = True
-        db_table = 'board'
+#     class Meta:
+#         managed = True
+#         db_table = 'board'
 
 #Commit model
 class Commit(models.Model):
     commit_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=True)
     task = models.ForeignKey('Task', models.DO_NOTHING, blank=True, null=True)
     commit_message = models.CharField(max_length=255, blank=True, null=True)
     updated_at = models.DateTimeField(blank=True, null=True, auto_now_add=True)
@@ -26,7 +27,7 @@ class Commit(models.Model):
 #List model
 class List(models.Model):
     column_id = models.IntegerField(primary_key=True)
-    board = models.ForeignKey(Board, models.DO_NOTHING, blank=True, null=True)
+    # board = models.ForeignKey(Board, models.DO_NOTHING, blank=True, null=True)
     col_name = models.CharField(max_length=255, blank=True, null=True)
     position = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True, auto_now_add=True)

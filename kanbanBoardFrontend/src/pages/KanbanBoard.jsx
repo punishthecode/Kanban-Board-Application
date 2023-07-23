@@ -80,8 +80,11 @@ function KanbanBoard() {
         animate={{ opacity: 1 }}
         transition={{ duration: 2 }}
       >
-        <Text fontSize={"24px"} fontWeight={"400"}>
+        {/* <Text fontSize={"24px"} fontWeight={"400"}>
           {capitalizeFirstLetter(username)}'s tasks
+        </Text> */}
+        <Text fontSize={"24px"} fontWeight={"400"}>
+          Welcome {capitalizeFirstLetter(username)}
         </Text>
       </motion.div>
       <KanbanTaskModal />
