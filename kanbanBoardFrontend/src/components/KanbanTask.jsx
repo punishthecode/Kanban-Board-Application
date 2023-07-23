@@ -14,10 +14,15 @@ import TaskPriority from "./TaskPriority";
 import KanbanTaskEditModal from "../pages/kanbanTaskEditModal";
 import "../App.css";
 
+// Task component (Cards within the list) with column_id prop
 function KanbanTask({ column_id }) {
   const [tasks, setTasks] = useState([]);
   const [selectedCard, setSelectedCard] = useState([]);
+
+  // Custom hook to handle the modal views
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  //API call to fetch all the tasks
   const fetchData = async () => {
     const response = await fetch("http://127.0.0.1:8000/kanban/tasks/");
     const resultJson = await response.json();
@@ -28,11 +33,14 @@ function KanbanTask({ column_id }) {
     fetchData();
   }, []);
 
+  // Filtering tasks based on column_id
   const column = tasks.filter((task) => task.column === column_id);
+
+  // Sorting tasks based on priority
   const sortedColumns = column.sort((a, b) => a.priority - b.priority);
 
+  // Search function for searching tasks within each column/list
   const [searchQuery, setSearchQuery] = useState("");
-
   const filteredTasks = sortedColumns.filter((task) =>
     task.task_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -50,7 +58,11 @@ function KanbanTask({ column_id }) {
         size={"sm"}
         marginBottom={"5%"}
         fontWeight={"400"}
-        _hover={{ border: "#2a4fff" }}
+        _hover={{
+          border: "#2a4fff",
+          transform: "scale(1.05)",
+          boxShadow: "4px 4px 10px rgba(0, 0, 255, 0.1)",
+        }}
         fontSize={"14px"}
       >
         <InputLeftElement
@@ -72,6 +84,10 @@ function KanbanTask({ column_id }) {
           height={"auto"}
           marginBottom={"10px"}
           cursor={"pointer"}
+          _hover={{
+            transform: "scale(1.05)",
+            boxShadow: "4px 4px 10px rgba(0, 0, 255, 0.1)",
+          }}
           onClick={() => {
             setSelectedCard(tasks);
             onOpen();

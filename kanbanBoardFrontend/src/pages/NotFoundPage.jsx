@@ -2,9 +2,11 @@ import React from "react";
 import { Box, Heading, Text, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
+// Error 404 page upon navigation to invalid urls
 const NotFoundPage = () => {
   const navigate = useNavigate();
 
+  // Navigate back to login page
   const handleGoBack = () => {
     navigate("/");
   };

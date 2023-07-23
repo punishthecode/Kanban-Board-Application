@@ -4,13 +4,18 @@ import { Box, Text, Button } from "@chakra-ui/react";
 import KanbanList from "../components/KanbanList";
 import KanbanTaskModal from "./KanbanTaskModal";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
+// Main dashboard with all components
 function KanbanBoard() {
+  // Passing the username and user_id to display on the dashboard
   const { state } = useLocation();
   const { username, user_id } = state;
+
   const [count, setCount] = useState([]);
   const [lists, setLists] = useState([]);
 
+  // API call to fetch all the lists and tasks
   const fetchData = async () => {
     const listResponse = await fetch("http://127.0.0.1:8000/kanban/lists");
     const taskResponse = await fetch("http://127.0.0.1:8000/kanban/tasks/");
@@ -23,22 +28,32 @@ function KanbanBoard() {
     fetchData();
   }, []);
 
+  // Hook used to access react router history and navigates to other routers
   const navigate = useNavigate();
 
+  // Code to capitalize the first letter of the username
   const capitalizeFirstLetter = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
+  // Navigate users to login page after logout
   const handleLogout = () => {
     navigate("/");
   };
 
+  // Columns and tasked mapped based on the progress
   return (
     <Box margin={"5%"}>
       <Box display={"flex"} width={"100%"}>
-        <Text fontSize={"36px"} fontWeight={"400"}>
-          Kanban Board
-        </Text>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.5 }}
+        >
+          <Text fontSize={"36px"} fontWeight={"400"}>
+            Kanban Board
+          </Text>
+        </motion.div>
         <Button
           justifyContent={"flex-end"}
           marginLeft={"auto"}
@@ -47,7 +62,11 @@ function KanbanBoard() {
           borderRadius={"4px"}
           border={"1px solid #D9D9D9"}
           background={"#2a4ecb"}
-          _hover={{ bg: "#2a4fff" }}
+          _hover={{
+            bg: "#2a4fff",
+            transform: "scale(1.05)",
+            boxShadow: "4px 4px 10px rgba(0, 0, 255, 0.1)",
+          }}
           color={"#ffffff"}
           fontSize={"14px "}
           fontWeight={"400"}
@@ -56,9 +75,15 @@ function KanbanBoard() {
           Logout
         </Button>
       </Box>
-      <Text fontSize={"24px"} fontWeight={"400"}>
-        {capitalizeFirstLetter(username)}'s tasks
-      </Text>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2 }}
+      >
+        <Text fontSize={"24px"} fontWeight={"400"}>
+          {capitalizeFirstLetter(username)}'s tasks
+        </Text>
+      </motion.div>
       <KanbanTaskModal />
       <Box marginTop={"3%"} display={"flex"}>
         {lists.map((lists, i) => (

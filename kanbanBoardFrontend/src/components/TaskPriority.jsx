@@ -2,6 +2,7 @@ import React from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import { Text, Box } from "@chakra-ui/react";
 
+// Set icons and priority descriptions based on the task's priority
 function TaskPriority({ priority }) {
   if (priority >= 3) {
     return (

@@ -12,14 +12,19 @@ import {
 } from "@chakra-ui/react";
 import "../App.css";
 
+// Login page
 function LoginPage() {
+  // Hook to handle use credentials
   const [credentials, setCredentials] = useState({
     email: "",
     pass_field: "",
   });
   const [users, setUsers] = useState([]);
+
+  //Custom hook to navigate between routers
   const navigate = useNavigate();
 
+  // Function to handle the event of input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCredentials((prevFormData) => {
@@ -30,22 +35,24 @@ function LoginPage() {
     });
   };
 
+  // Function to handle navigation to sign-up page
   const navigateToSignUp = (e) => {
     e.preventDefault();
     navigate("/signup");
   };
 
+  // API call to fetch all the users
   const fetchCredentials = async () => {
     const response = await fetch("http://127.0.0.1:8000/kanban/users/");
     const resultJson = await response.json();
     setUsers(resultJson);
-    console.log(resultJson);
   };
 
   useEffect(() => {
     fetchCredentials();
   }, []);
 
+  // Function to validate the user credentials and provide access to the board based on the validation
   function checkCredentials(e) {
     e.preventDefault();
     const validate = users.filter(
@@ -53,7 +60,6 @@ function LoginPage() {
         user.email === credentials.email &&
         user.pass_field === credentials.pass_field
     );
-    console.log(validate);
     if (validate.length != 0) {
       navigate("/kanban", {
         state: {
@@ -65,6 +71,8 @@ function LoginPage() {
       alert("Invalid Credentials");
     }
   }
+
+  // Login screen component
   return (
     <Center height={"100vh"}>
       <Box
@@ -134,13 +142,17 @@ function LoginPage() {
                 fontSize={"14px"}
                 background={"#2a4ecb"}
                 fontWeight={"400"}
-                _hover={{ bg: "#2a4fff" }}
+                _hover={{
+                  bg: "#2a4fff",
+                  transform: "scale(1.05)",
+                  boxShadow: "4px 4px 10px rgba(0, 0, 255, 0.1)",
+                }}
               >
                 Login
               </Button>
               <Button
                 background={"transparent"}
-                _hover={{ bg: "transparent" }}
+                _hover={{ bg: "transparent", transform: "scale(1.05)" }}
                 fontSize={"14px"}
                 fontWeight={"400"}
                 color={"rgba(0,0,0,0.50)"}

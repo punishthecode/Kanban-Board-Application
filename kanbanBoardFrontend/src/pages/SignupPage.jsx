@@ -13,7 +13,9 @@ import {
 import "../App.css";
 import axios from "axios";
 
+// Sign-up page
 function SignupPage() {
+  // Credentials required for sign-up
   const [credentials, setCredentials] = useState({
     username: "",
     email: "",
@@ -22,20 +24,23 @@ function SignupPage() {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
+  // Function to fetch all users
   const fetchCredentials = async () => {
     const response = await fetch("http://127.0.0.1:8000/kanban/users/");
     const resultJson = await response.json();
     setUsers(resultJson);
-    console.log(resultJson);
   };
   useEffect(() => {
     fetchCredentials();
   }, []);
 
+  // Navigate back to login page
   function GoBack(e) {
     e.preventDefault();
     navigate("/");
   }
+
+  // Function to handle the event of input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCredentials((prevFormData) => {
@@ -46,6 +51,8 @@ function SignupPage() {
     });
   };
 
+  // Function handle submission of the sign-up form
+  // This function filters existing users and posts registration credentials based on the result
   const handleRegister = async (e) => {
     e.preventDefault();
     if (users.filter((user) => user.email === credentials.email).length != 0) {
@@ -55,11 +62,12 @@ function SignupPage() {
         "http://127.0.0.1:8000/kanban/users/",
         credentials
       );
-      console.log(response);
       alert("Registered successfully");
       navigate("/");
     }
   };
+
+  // Sign-up page component
   return (
     <Center height={"100vh"}>
       <Box
@@ -146,14 +154,21 @@ function SignupPage() {
                 fontSize={"14px"}
                 background={"#2a4ecb"}
                 fontWeight={"400"}
-                _hover={{ bg: "#2a4fff" }}
+                _hover={{
+                  bg: "#2a4fff",
+                  transform: "scale(1.05)",
+                  boxShadow: "4px 4px 10px rgba(0, 0, 255, 0.1)",
+                }}
                 onClick={GoBack}
               >
                 Go Back
               </Button>
               <Button
                 background={"transparent"}
-                _hover={{ bg: "transparent" }}
+                _hover={{
+                  bg: "transparent",
+                  transform: "scale(1.05)",
+                }}
                 fontSize={"14px"}
                 fontWeight={"400"}
                 color={"rgba(0,0,0,0.50)"}

@@ -18,6 +18,7 @@ import {
 import React, { useState } from "react";
 import axios from "axios";
 
+// Passing task fields as props
 function KanbanTaskEditModal({
   onClose,
   isOpen,
@@ -36,9 +37,11 @@ function KanbanTaskEditModal({
   updated_at,
   initialRef,
 }) {
+  // Progress and priority
   const status = ["To-do", "In progress", "Completed"];
   const priorityPick = [1, 2, 3, 4];
 
+  // Function to handle the event of changing input fields
   const handleChange = async (e) => {
     const { name, value } = e.target;
     setformData((prevFormData) => {
@@ -49,17 +52,26 @@ function KanbanTaskEditModal({
     });
   };
 
+  // Function to delete a task upon clicking the delete button
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    const response = await axios.delete(
+      `http://127.0.0.1:8000/kanban/tasks/${task_id}/`
+    );
+    window.location.reload(true);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await axios.put(
       `http://127.0.0.1:8000/kanban/tasks/${task_id}/`,
       formData
     );
-    console.log(response);
     window.location.reload(true);
-    // Handle the response as needed
   };
 
+  // Setting form defaults
+  const currentTime = new Date();
   const [formData, setformData] = useState({
     task_id: 1,
     column: 1,
@@ -73,9 +85,10 @@ function KanbanTaskEditModal({
     end_date: "",
     priority: "",
     created_at: "",
-    updated_at: "",
+    updated_at: currentTime.toISOString(),
   });
 
+  // Code block tp handle and track edit operation on tasks
   const [isEditable, setIsEditable] = useState(false);
 
   const handleEdit = (closed) => {
@@ -86,11 +99,10 @@ function KanbanTaskEditModal({
     }
   };
 
+  // Using OR to switch between view-only and editable state
   return (
     <>
       <Modal
-        // initialFocusRef={initialRef}
-        // finalFocusRef={finalRef}
         isOpen={isOpen}
         onClose={() => {
           onClose();
@@ -99,7 +111,7 @@ function KanbanTaskEditModal({
         size={"3xl"}
         scrollBehavior={"inside"}
       >
-        <ModalOverlay />
+        <ModalOverlay backdropFilter={"blur(5px)"} />
         <ModalContent overflowX={"hidden"}>
           <ModalHeader>
             <Text paddingLeft={"10px"} fontSize={"26px"} fontWeight={"400"}>
@@ -118,34 +130,62 @@ function KanbanTaskEditModal({
                   <Text>Story points: {story_points}</Text>
                   <Text>Assigner ID: {assigner}</Text>
                   <Text>Assignee ID: {assignee}</Text>
-                  <Text>Created at: {created_at}</Text>
-                  <Text>Updated at: {updated_at}</Text>
+                  <Text>Deadline: {end_date}</Text>
                 </Box>
                 <Box display={"flex"} justifyContent={"flex-end"} bottom={0}>
                   <Button
                     paddingBottom={"5px"}
                     onClick={onClose}
                     background={"transparent"}
-                    _hover={{ bg: "transparent" }}
+                    _hover={{
+                      bg: "transparent",
+                      transform: "scale(1.05)",
+                    }}
                     fontSize={"14px"}
                     fontWeight={"400"}
                     color={"rgba(0,0,0,0.50)"}
                   >
                     Cancel
                   </Button>
-                  <Button
-                    onClick={handleEdit}
-                    color={"#ffffff"}
-                    width={"79px"}
-                    height={"30px"}
-                    borderRadius={"4px"}
-                    fontSize={"14px"}
-                    background={"#2a4ecb"}
-                    fontWeight={"400"}
-                    _hover={{ bg: "#2a4fff" }}
-                  >
-                    Edit
-                  </Button>
+                  {column === 2 && (
+                    <Button
+                      onClick={handleDelete}
+                      color={"#ffffff"}
+                      width={"79px"}
+                      height={"30px"}
+                      marginRight={"10px"}
+                      borderRadius={"4px"}
+                      fontSize={"14px"}
+                      background={"#ff0000"}
+                      fontWeight={"400"}
+                      _hover={{
+                        bg: "#ff000f",
+                        transform: "scale(1.05)",
+                        boxShadow: "4px 4px 10px rgba(255, 0, 0, 0.1)",
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  )}
+                  {column != 2 && (
+                    <Button
+                      onClick={handleEdit}
+                      color={"#ffffff"}
+                      width={"79px"}
+                      height={"30px"}
+                      borderRadius={"4px"}
+                      fontSize={"14px"}
+                      background={"#2a4ecb"}
+                      fontWeight={"400"}
+                      _hover={{
+                        bg: "#2a4fff",
+                        transform: "scale(1.05)",
+                        boxShadow: "4px 4px 10px rgba(0, 0, 255, 0.1)",
+                      }}
+                    >
+                      Edit
+                    </Button>
+                  )}
                 </Box>
               </Box>
             ) : (
@@ -203,8 +243,10 @@ function KanbanTaskEditModal({
                         Status
                       </FormLabel>
                       <Select
+                        placeholder="Select status"
+                        defaultChecked={column}
                         id={"column"}
-                        defaultValue={column}
+                        // defaultValue={column}
                         name={"column"}
                         onChange={handleChange}
                         borderRadius={"4px"}
@@ -214,7 +256,7 @@ function KanbanTaskEditModal({
                         fontSize={"12px"}
                       >
                         {status.map((status, index) => (
-                          <option key={index} value={index + 1}>
+                          <option key={index} value={index}>
                             {status}
                           </option>
                         ))}
@@ -228,7 +270,9 @@ function KanbanTaskEditModal({
                         Priority
                       </FormLabel>
                       <Select
-                        defaultValue={priority}
+                        placeholder="Select priority"
+                        defaultChecked={priority}
+                        // defaultValue={priority}
                         name={"priority"}
                         onChange={handleChange}
                         borderRadius={"4px"}
@@ -249,14 +293,16 @@ function KanbanTaskEditModal({
                         fontWeight={"400"}
                         color={"rgba(0,0,0,0.50)"}
                       >
-                        Story points
+                        Story points (Min: 1 Max:5)
                       </FormLabel>
                       <Input
+                        min={1}
+                        max={5}
                         defaultValue={story_points}
                         name={"story_points"}
                         onChange={handleChange}
                         borderRadius={"4px"}
-                        type={"text"}
+                        type={"number"}
                         height={"32px"}
                         width={"215px"}
                         ref={initialRef}
@@ -276,7 +322,7 @@ function KanbanTaskEditModal({
                         name={"assigner"}
                         onChange={handleChange}
                         borderRadius={"4px"}
-                        type={"text"}
+                        type={"number"}
                         height={"32px"}
                         width={"215px"}
                         ref={initialRef}
@@ -296,7 +342,7 @@ function KanbanTaskEditModal({
                         name={"assignee"}
                         onChange={handleChange}
                         borderRadius={"4px"}
-                        type={"text"}
+                        type={"number"}
                         height={"32px"}
                         width={"215px"}
                         ref={initialRef}
@@ -321,6 +367,26 @@ function KanbanTaskEditModal({
                     >
                       Cancel
                     </Button>
+                    {column == 2 && (
+                      <Button
+                        onClick={handleDelete}
+                        color={"#ffffff"}
+                        width={"79px"}
+                        height={"30px"}
+                        marginRight={"10px"}
+                        borderRadius={"4px"}
+                        fontSize={"14px"}
+                        background={"#ff0000"}
+                        fontWeight={"400"}
+                        _hover={{
+                          bg: "#ff000f",
+                          transform: "scale(1.05)",
+                          boxShadow: "4px 4px 10px rgba(255, 0, 0, 0.1)",
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    )}
                     <Button
                       type={"submit"}
                       onClick={onClose}

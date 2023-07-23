@@ -7,6 +7,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import SignupPage from "./pages/SignupPage";
 import "./App.css";
 
+// App component that contains urls and hanldes routes
 function App() {
   const router = createBrowserRouter([
     {
