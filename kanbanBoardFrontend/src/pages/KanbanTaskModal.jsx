@@ -170,7 +170,7 @@ function KanbanTaskModal() {
                       Due date
                     </Text>
                     <Input
-                      value={formData.end_date.value}
+                      value={formData.end_date}
                       name={"end_date"}
                       onChange={handleChange}
                       type="date"
@@ -190,6 +190,7 @@ function KanbanTaskModal() {
                       Status
                     </FormLabel>
                     <Select
+                      placeholder="Select status"
                       id={"column"}
                       value={formData.column}
                       name={"column"}
@@ -215,6 +216,7 @@ function KanbanTaskModal() {
                       Priority
                     </FormLabel>
                     <Select
+                      placeholder="Select priority"
                       value={formData.priority}
                       name={"priority"}
                       onChange={handleChange}

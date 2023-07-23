@@ -50,6 +50,7 @@ function KanbanTask({ column_id }) {
       key={tasks.task_id}
       paddingTop={"5%"}
       marginLeft={"5%"}
+      paddingBottom={"0.1rem"}
       marginRight={"5%"}
       marginTop={"5%"}
     >

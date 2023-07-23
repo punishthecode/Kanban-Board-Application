@@ -233,6 +233,26 @@ function KanbanTaskEditModal({
                         borderRadius={"4px"}
                         fontSize={"14px"}
                       />
+                      <Text
+                        marginTop={"3.5%"}
+                        fontSize={"12px"}
+                        fontWeight={"400"}
+                        color={"rgba(0,0,0,0.50)"}
+                        paddingBottom={"8px"}
+                      >
+                        Due date
+                      </Text>
+                      <Input
+                        defaultValue={end_date}
+                        name={"end_date"}
+                        onChange={handleChange}
+                        type="date"
+                        textAlign={"start"}
+                        width={"420px"}
+                        height={"30px"}
+                        borderRadius={"4px"}
+                        fontSize={"14px"}
+                      ></Input>
                     </Box>
                     <Box marginLeft={"50px"} paddingRight={"20px"}>
                       <FormLabel

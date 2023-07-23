@@ -21,7 +21,7 @@ function KanbanList({ column }) {
     <Box
       marginRight={"10%"}
       width={"216px"}
-      height={"400px"}
+      height={"autp"}
       backgroundColor={"#eeeeee"}
       scrollBehavior={"inside"}
       _hover={{
