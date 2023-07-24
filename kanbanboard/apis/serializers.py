@@ -1,11 +1,6 @@
 from rest_framework import serializers
 from .models import *
 
-# class BoardSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Board
-#         fields = '__all__'
-
 # Serializers for all tables
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,12 +12,20 @@ class TaskSerializer(serializers.ModelSerializer):
         model = Task
         fields = '__all__'
 
-class CommitSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Commit
-        fields = '__all__'
-
 class ListSerializer(serializers.ModelSerializer):
     class Meta:
         model = List
         fields = '__all__'
+
+# class CommitSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Commit
+#         fields = '__all__'
+
+# class BoardSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Board
+#         fields = '__all__'
+
+
+

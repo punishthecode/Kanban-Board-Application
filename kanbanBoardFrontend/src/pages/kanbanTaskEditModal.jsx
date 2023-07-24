@@ -63,7 +63,7 @@ function KanbanTaskEditModal({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.put(
+    const response = await axios.patch(
       `http://127.0.0.1:8000/kanban/tasks/${task_id}/`,
       formData
     );
@@ -119,7 +119,7 @@ function KanbanTaskEditModal({
             </Text>
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody pb={6}>
+          <ModalBody>
             {!isEditable ? (
               <Box>
                 <Box paddingLeft={"11px"} fontSize={"14px"}>
@@ -209,7 +209,7 @@ function KanbanTaskEditModal({
                         type="textbox"
                         textAlign={"start"}
                         width={"420px"}
-                        height={"260px"}
+                        height={"120px"}
                         borderRadius={"4px"}
                         fontSize={"14px"}
                       />
@@ -371,21 +371,19 @@ function KanbanTaskEditModal({
                       />
                     </Box>
                   </Box>
-                  <Box
-                    marginTop={"30px"}
-                    display={"flex"}
-                    justifyContent={"flex-end"}
-                  >
+                </FormControl>
+                <ModalFooter>
+                  <Box display={"flex"} justifyContent={"flex-end"}>
                     <Button
                       paddingBottom={"5px"}
-                      onClick={onClose}
+                      onClick={handleEdit}
                       background={"transparent"}
                       _hover={{ bg: "transparent" }}
                       fontSize={"14px"}
                       fontWeight={"400"}
                       color={"rgba(0,0,0,0.50)"}
                     >
-                      Cancel
+                      Go back
                     </Button>
                     {column == 2 && (
                       <Button
@@ -422,11 +420,10 @@ function KanbanTaskEditModal({
                       Save
                     </Button>
                   </Box>
-                </FormControl>
+                </ModalFooter>
               </form>
             )}
           </ModalBody>
-          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
     </>

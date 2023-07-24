@@ -56,6 +56,7 @@ function KanbanTask({ column_id }) {
     }
   }
   const sortedColumns = sortTasks();
+
   // Search function for searching tasks within each column/list
   const [searchQuery, setSearchQuery] = useState("");
   const filteredTasks = sortedColumns.filter((task) =>

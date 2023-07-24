@@ -58,12 +58,22 @@ function SignupPage() {
     if (users.filter((user) => user.email === credentials.email).length != 0) {
       alert("Email already registered");
     } else {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/kanban/users/",
-        credentials
-      );
-      alert("Registered successfully");
-      navigate("/");
+      if (
+        !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+          credentials.pass_field
+        ) == false
+      ) {
+        const response = await axios.post(
+          "http://127.0.0.1:8000/kanban/users/",
+          credentials
+        );
+        alert("Registered successfully");
+        navigate("/");
+      } else {
+        alert(
+          "Password must be at least 8 characters long, contain at least one uppercase letter, at least one number, and at least one special character (!@#$%^&*(),.?:{}|<>)."
+        );
+      }
     }
   };
 

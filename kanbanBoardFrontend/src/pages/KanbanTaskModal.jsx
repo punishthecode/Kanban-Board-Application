@@ -106,7 +106,7 @@ function KanbanTaskModal() {
           <ModalCloseButton />
           <ModalBody pb={6}>
             <form onSubmit={handleSubmit}>
-              <FormControl>
+              <FormControl isRequired>
                 <Input
                   value={formData.task_name}
                   name={"task_name"}
