@@ -9,4 +9,5 @@ urlpatterns = [
     path('tasks/<int:pk>/', TaskView.as_view(), name='task-retrieve-update-delete'),
     path('lists/', ListView.as_view(), name='list-list-create'),
     path('lists/<int:pk>/', ListView.as_view(), name='list-retrieve-update-delete'),
+    path('login/', LoginAPIView.as_view(), name='login'), # To be implemented
 ]
