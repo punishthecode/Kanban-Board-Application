@@ -8,7 +8,7 @@ const NotFoundPage = () => {
 
   // Navigate back to login page
   const handleGoBack = () => {
-    navigate("/");
+    navigate("/login");
   };
 
   return (

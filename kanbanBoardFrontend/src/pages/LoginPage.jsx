@@ -11,29 +11,16 @@ import {
   Image,
 } from "@chakra-ui/react";
 import "../App.css";
+import axios from "axios";
 
 // Login page
 function LoginPage() {
-  // Hook to handle use credentials
-  const [credentials, setCredentials] = useState({
-    email: "",
-    pass_field: "",
-  });
-  const [users, setUsers] = useState([]);
+  // Hook to handle use credentialsS
+  const [username, setUsername] = useState("");
+  const [pass_field, setPass_Field] = useState("");
 
   //Custom hook to navigate between routers
   const navigate = useNavigate();
-
-  // Function to handle the event of input change
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCredentials((prevFormData) => {
-      return {
-        ...prevFormData,
-        [name]: value,
-      };
-    });
-  };
 
   // Function to handle navigation to sign-up page
   const navigateToSignUp = (e) => {
@@ -41,36 +28,25 @@ function LoginPage() {
     navigate("/signup");
   };
 
-  // API call to fetch all the users
-  const fetchCredentials = async () => {
-    const response = await fetch("http://127.0.0.1:8000/kanban/users/");
-    const resultJson = await response.json();
-    setUsers(resultJson);
-  };
-
-  useEffect(() => {
-    fetchCredentials();
-  }, []);
-
-  // Function to validate the user credentials and provide access to the board based on the validation
-  function checkCredentials(e) {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const validate = users.filter(
-      (user) =>
-        user.email === credentials.email &&
-        user.pass_field === credentials.pass_field
-    );
-    if (validate.length != 0) {
-      navigate("/kanban", {
-        state: {
-          username: validate[0].username,
-          user_id: validate[0].user_id,
-        },
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/kanban/login/", {
+        username,
+        pass_field,
       });
-    } else {
-      alert("Invalid Credentials");
+      if (response.status === 200) {
+        console.log("Login successful");
+        console.log(response.data.username);
+        setUsername(response.data.username);
+        navigate(`/kanban?username=${response.data.username}`);
+      } else {
+        alert("Invalid Credentials");
+      }
+    } catch (error) {
+      alert("Error occured while logging in");
     }
-  }
+  };
 
   // Login screen component
   return (
@@ -95,23 +71,23 @@ function LoginPage() {
           >
             Login
           </Text>
-          <form onSubmit={checkCredentials}>
+          <form onSubmit={handleLogin}>
             <FormControl paddingBottom={"20px"} isRequired>
               <FormLabel
                 fontSize={"14px"}
                 fontWeight={"400"}
                 color={"rgba(0,0,0,0.50"}
               >
-                Email
+                Username
               </FormLabel>
               <Input
                 boxShadow={"4px 4px 10px rgba(0, 0, 255, 0.1)"}
                 fontSize={"14px"}
-                placeholder="mrkanban@board.com"
-                type="email"
-                name="email"
-                value={credentials.email}
-                onChange={handleChange}
+                placeholder="mrkanban"
+                type="text"
+                name="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </FormControl>
             <FormControl paddingBottom={"20px"} isRequired>
@@ -128,8 +104,8 @@ function LoginPage() {
                 placeholder="password"
                 type="password"
                 name="pass_field"
-                value={credentials.pass_field}
-                onChange={handleChange}
+                value={pass_field}
+                onChange={(e) => setPass_Field(e.target.value)}
               />
             </FormControl>
             <Center display={"flex"} justifyContent={"flex-end"}>

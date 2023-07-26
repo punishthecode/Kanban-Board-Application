@@ -4,6 +4,8 @@ from rest_framework import generics
 from .models import *
 from .serializers import *
 from rest_framework.views import APIView
+from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth import authenticate
 
 # Base class to define the generic methods which will be inherited by each table 
 # SOLID Principles and restful methods satisfied
@@ -105,15 +107,39 @@ class ListView(CrudOperationsView):
 
 class LoginAPIView(APIView):
     def post(self, request):
-        email = request.data.get('email')
+        username = request.data.get('username')
         pass_field = request.data.get('pass_field')
 
         try:
-            user = User.objects.get(email=email)
+            user = User.objects.get(username=username)
         except User.DoesNotExist:
             return Response("Invalid username or password", status=status.HTTP_401_UNAUTHORIZED)
 
-        if user.pass_field == pass_field:  # In a real-world scenario, compare hashed passwords using a secure method (e.g., bcrypt).
-            return Response("Login successful", status=status.HTTP_200_OK)
+        result = check_password(pass_field, user.pass_field)
+        if result:  
+            data = {
+                'username': user.username,
+                'message': 'Login successful',
+            }
+            return Response(data, status=status.HTTP_200_OK)
         else:
             return Response("Invalid username or password", status=status.HTTP_401_UNAUTHORIZED)
+
+class SignupAPIView(APIView):
+    def post(self, request):
+        username = request.data.get('username')
+        pass_field = request.data.get('pass_field')
+        email = request.data.get('email')
+
+        try:
+            user = User.objects.get(username=username)
+            return Response("Username already exists", status=status.HTTP_409_CONFLICT)
+        except User.DoesNotExist:
+            hashed_password = make_password(pass_field)
+            user = User.objects.create(username=username, pass_field=hashed_password, email=email)
+            user.save()
+            data = {
+                'username': user.username,
+                'message': 'Signup successful',
+            }
+            return Response(data, status=status.HTTP_201_CREATED)

@@ -16,64 +16,41 @@ import axios from "axios";
 // Sign-up page
 function SignupPage() {
   // Credentials required for sign-up
-  const [credentials, setCredentials] = useState({
-    username: "",
-    email: "",
-    pass_field: "",
-  });
-  const [users, setUsers] = useState([]);
-  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [pass_field, setPass_Field] = useState("");
+  const [email, setEmail] = useState("");
 
-  // Function to fetch all users
-  const fetchCredentials = async () => {
-    const response = await fetch("http://127.0.0.1:8000/kanban/users/");
-    const resultJson = await response.json();
-    setUsers(resultJson);
-  };
-  useEffect(() => {
-    fetchCredentials();
-  }, []);
+  const navigate = useNavigate();
 
   // Navigate back to login page
   function GoBack(e) {
     e.preventDefault();
-    navigate("/");
+    navigate("/login");
   }
-
-  // Function to handle the event of input change
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCredentials((prevFormData) => {
-      return {
-        ...prevFormData,
-        [name]: value,
-      };
-    });
-  };
 
   // Function handle submission of the sign-up form
   // This function filters existing users and posts registration credentials based on the result
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (users.filter((user) => user.email === credentials.email).length != 0) {
-      alert("Email already registered");
+    if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+        pass_field
+      ) == false
+    ) {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/kanban/signup/",
+        {
+          username: username,
+          pass_field: pass_field,
+          email: email,
+        }
+      );
+      alert("Registered successfully");
+      navigate("/login");
     } else {
-      if (
-        !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-          credentials.pass_field
-        ) == false
-      ) {
-        const response = await axios.post(
-          "http://127.0.0.1:8000/kanban/users/",
-          credentials
-        );
-        alert("Registered successfully");
-        navigate("/");
-      } else {
-        alert(
-          "Password must be at least 8 characters long, contain at least one uppercase letter, at least one number, and at least one special character (!@#$%^&*(),.?:{}|<>)."
-        );
-      }
+      alert(
+        "Password must be at least 8 characters long, contain at least one uppercase letter, at least one number, and at least one special character (!@#$%^&*(),.?:{}|<>)."
+      );
     }
   };
 
@@ -115,8 +92,8 @@ function SignupPage() {
                 placeholder="mrkanbanboard"
                 type="text"
                 name="username"
-                value={credentials.username}
-                onChange={handleChange}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </FormControl>
             <FormControl paddingBottom={"20px"} isRequired>
@@ -133,8 +110,8 @@ function SignupPage() {
                 placeholder="mrkanban@board.com"
                 type="email"
                 name="email"
-                value={credentials.email}
-                onChange={handleChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </FormControl>
             <FormControl paddingBottom={"20px"} isRequired>
@@ -151,8 +128,8 @@ function SignupPage() {
                 placeholder="password"
                 type="password"
                 name="pass_field"
-                value={credentials.pass_field}
-                onChange={handleChange}
+                value={pass_field}
+                onChange={(e) => setPass_Field(e.target.value)}
               />
             </FormControl>
             <Center display={"flex"} justifyContent={"flex-end"}>

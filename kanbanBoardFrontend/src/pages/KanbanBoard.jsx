@@ -9,8 +9,9 @@ import { motion } from "framer-motion";
 // Main dashboard with all components
 function KanbanBoard() {
   // Passing the username and user_id to display on the dashboard
-  const { state } = useLocation();
-  const { username, user_id } = state;
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const username = searchParams.get("username") || "User";
 
   const [count, setCount] = useState([]);
   const [lists, setLists] = useState([]);
@@ -31,14 +32,9 @@ function KanbanBoard() {
   // Hook used to access react router history and navigates to other routers
   const navigate = useNavigate();
 
-  // Code to capitalize the first letter of the username
-  const capitalizeFirstLetter = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };
-
   // Navigate users to login page after logout
   const handleLogout = () => {
-    navigate("/");
+    navigate("/login");
   };
 
   // Columns and tasked mapped based on the progress
@@ -84,7 +80,7 @@ function KanbanBoard() {
           {capitalizeFirstLetter(username)}'s tasks
         </Text> */}
         <Text fontSize={"24px"} fontWeight={"400"}>
-          Welcome {capitalizeFirstLetter(username)}
+          Welcome {username}
         </Text>
       </motion.div>
       <KanbanTaskModal />
