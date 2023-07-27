@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import image from "../assets/KanbanLogo.png";
 import {
   Box,
   FormControl,
@@ -58,7 +59,7 @@ function LoginPage() {
       >
         <Box padding={"10%"}>
           <Image
-            src="src\assets\KanbanLogo.png"
+            src={image}
             width={"50px"}
             borderRadius={"6px"}
             boxShadow={"4px 4px 10px rgba(0, 0, 255, 0.1)"}

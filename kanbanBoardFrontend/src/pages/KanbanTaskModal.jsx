@@ -89,8 +89,6 @@ function KanbanTaskModal() {
       </Button>
 
       <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
         isOpen={isOpen}
         onClose={onClose}
         size={"3xl"}
@@ -135,7 +133,7 @@ function KanbanTaskModal() {
                       placeholder="Describe your task"
                       textAlign={"start"}
                       width={"420px"}
-                      height={"260px"}
+                      height={"auto"}
                       borderRadius={"4px"}
                       fontSize={"14px"}
                     />
@@ -334,7 +332,6 @@ function KanbanTaskModal() {
               </FormControl>
             </form>
           </ModalBody>
-          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
     </>

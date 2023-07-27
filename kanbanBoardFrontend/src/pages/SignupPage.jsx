@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import "../App.css";
 import axios from "axios";
+import image from "../assets/KanbanLogo.png";
 
 // Sign-up page
 function SignupPage() {
@@ -64,7 +65,7 @@ function SignupPage() {
       >
         <Box padding={"10%"}>
           <Image
-            src="src\assets\KanbanLogo.png"
+            src={image}
             width={"50px"}
             borderRadius={"6px"}
             boxShadow={"4px 4px 10px rgba(0, 0, 255, 0.1)"}

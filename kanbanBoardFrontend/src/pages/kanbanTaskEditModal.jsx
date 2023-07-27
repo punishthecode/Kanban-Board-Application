@@ -209,7 +209,7 @@ function KanbanTaskEditModal({
                         type="textbox"
                         textAlign={"start"}
                         width={"420px"}
-                        height={"120px"}
+                        height={"auto"}
                         borderRadius={"4px"}
                         fontSize={"14px"}
                       />
@@ -292,7 +292,6 @@ function KanbanTaskEditModal({
                       <Select
                         placeholder="Select priority"
                         defaultChecked={priority}
-                        // defaultValue={priority}
                         name={"priority"}
                         onChange={handleChange}
                         borderRadius={"4px"}
@@ -372,55 +371,58 @@ function KanbanTaskEditModal({
                     </Box>
                   </Box>
                 </FormControl>
-                <ModalFooter>
-                  <Box display={"flex"} justifyContent={"flex-end"}>
+                <Box
+                  marginBottom={"2.5%"}
+                  marginTop={"5%"}
+                  display={"flex"}
+                  justifyContent={"flex-end"}
+                >
+                  <Button
+                    paddingBottom={"5px"}
+                    onClick={handleEdit}
+                    background={"transparent"}
+                    _hover={{ bg: "transparent" }}
+                    fontSize={"14px"}
+                    fontWeight={"400"}
+                    color={"rgba(0,0,0,0.50)"}
+                  >
+                    Go back
+                  </Button>
+                  {column == 2 && (
                     <Button
-                      paddingBottom={"5px"}
-                      onClick={handleEdit}
-                      background={"transparent"}
-                      _hover={{ bg: "transparent" }}
-                      fontSize={"14px"}
-                      fontWeight={"400"}
-                      color={"rgba(0,0,0,0.50)"}
-                    >
-                      Go back
-                    </Button>
-                    {column == 2 && (
-                      <Button
-                        onClick={handleDelete}
-                        color={"#ffffff"}
-                        width={"79px"}
-                        height={"30px"}
-                        marginRight={"10px"}
-                        borderRadius={"4px"}
-                        fontSize={"14px"}
-                        background={"#ff0000"}
-                        fontWeight={"400"}
-                        _hover={{
-                          bg: "#ff000f",
-                          transform: "scale(1.05)",
-                          boxShadow: "4px 4px 10px rgba(255, 0, 0, 0.1)",
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    )}
-                    <Button
-                      type={"submit"}
-                      onClick={onClose}
+                      onClick={handleDelete}
                       color={"#ffffff"}
                       width={"79px"}
                       height={"30px"}
+                      marginRight={"10px"}
                       borderRadius={"4px"}
                       fontSize={"14px"}
-                      background={"#2a4ecb"}
+                      background={"#ff0000"}
                       fontWeight={"400"}
-                      _hover={{ bg: "#2a4fff" }}
+                      _hover={{
+                        bg: "#ff000f",
+                        transform: "scale(1.05)",
+                        boxShadow: "4px 4px 10px rgba(255, 0, 0, 0.1)",
+                      }}
                     >
-                      Save
+                      Delete
                     </Button>
-                  </Box>
-                </ModalFooter>
+                  )}
+                  <Button
+                    type={"submit"}
+                    onClick={onClose}
+                    color={"#ffffff"}
+                    width={"79px"}
+                    height={"30px"}
+                    borderRadius={"4px"}
+                    fontSize={"14px"}
+                    background={"#2a4ecb"}
+                    fontWeight={"400"}
+                    _hover={{ bg: "#2a4fff" }}
+                  >
+                    Save
+                  </Button>
+                </Box>
               </form>
             )}
           </ModalBody>
