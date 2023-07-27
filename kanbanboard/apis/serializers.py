@@ -17,10 +17,10 @@ class ListSerializer(serializers.ModelSerializer):
         model = List
         fields = '__all__'
 
-# class CommitSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Commit
-#         fields = '__all__'
+class CommitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Commit
+        fields = '__all__'
 
 # class BoardSerializer(serializers.ModelSerializer):
 #     class Meta:
