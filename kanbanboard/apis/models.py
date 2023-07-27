@@ -13,16 +13,16 @@ from django.db import models
 #         db_table = 'board'
 
 #Commit model - Implement as a feature soon
-class Commit(models.Model):
-    commit_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=True)
-    task = models.ForeignKey('Task', models.DO_NOTHING, blank=True, null=True)
-    commit_message = models.CharField(max_length=255, blank=True, null=True)
-    updated_at = models.DateTimeField(blank=True, null=True, auto_now_add=True)
+# class Commit(models.Model):
+#     commit_id = models.AutoField(primary_key=True)
+#     user = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=True)
+#     task = models.ForeignKey('Task', models.DO_NOTHING, blank=True, null=True)
+#     commit_message = models.CharField(max_length=255, blank=True, null=True)
+#     updated_at = models.DateTimeField(blank=True, null=True, auto_now_add=True)
 
-    class Meta:
-        managed = True
-        db_table = 'commit'
+#     class Meta:
+#         managed = True
+#         db_table = 'commit'
         
 #List model
 class List(models.Model):

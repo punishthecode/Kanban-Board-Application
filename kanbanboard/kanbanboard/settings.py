@@ -27,14 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-# HTTPS
-# SECURE_SSL_REDIRECT = False
-# SESSION_COOKIE_SECURE = False
-# CSRF_COOKIE_SECURE = False
-# SECURE_SSL_CERTIFICATE = './server.crt'
-# SECURE_SSL_PRIVATE_KEY = './server.key'
-
-
 
 # Application definition
 

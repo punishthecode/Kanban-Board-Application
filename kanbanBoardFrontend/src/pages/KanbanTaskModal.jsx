@@ -294,44 +294,47 @@ function KanbanTaskModal() {
                     />
                   </Box>
                 </Box>
+                <Box
+                  marginTop={"30px"}
+                  display={"flex"}
+                  justifyContent={"flex-end"}
+                >
+                  <Button
+                    paddingBottom={"5px"}
+                    onClick={onClose}
+                    background={"transparent"}
+                    _hover={{
+                      bg: "transparent",
+                      transform: "scale(1.05)",
+                    }}
+                    fontSize={"14px"}
+                    fontWeight={"400"}
+                    color={"rgba(0,0,0,0.50)"}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type={"submit"}
+                    color={"#ffffff"}
+                    width={"79px"}
+                    height={"30px"}
+                    borderRadius={"4px"}
+                    fontSize={"14px"}
+                    background={"#2a4ecb"}
+                    fontWeight={"400"}
+                    _hover={{
+                      bg: "#2a4fff",
+                      transform: "scale(1.05)",
+                      boxShadow: "4px 4px 10px rgba(0, 0, 255, 0.1)",
+                    }}
+                  >
+                    Save
+                  </Button>
+                </Box>
               </FormControl>
             </form>
           </ModalBody>
-          <ModalFooter>
-            <Box display={"flex"} justifyContent={"flex-end"}>
-              <Button
-                paddingBottom={"5px"}
-                onClick={onClose}
-                background={"transparent"}
-                _hover={{
-                  bg: "transparent",
-                  transform: "scale(1.05)",
-                }}
-                fontSize={"14px"}
-                fontWeight={"400"}
-                color={"rgba(0,0,0,0.50)"}
-              >
-                Cancel
-              </Button>
-              <Button
-                type={"submit"}
-                color={"#ffffff"}
-                width={"79px"}
-                height={"30px"}
-                borderRadius={"4px"}
-                fontSize={"14px"}
-                background={"#2a4ecb"}
-                fontWeight={"400"}
-                _hover={{
-                  bg: "#2a4fff",
-                  transform: "scale(1.05)",
-                  boxShadow: "4px 4px 10px rgba(0, 0, 255, 0.1)",
-                }}
-              >
-                Save
-              </Button>
-            </Box>
-          </ModalFooter>
+          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
     </>

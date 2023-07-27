@@ -14,7 +14,6 @@ import {
   Select,
   FormLabel,
   Textarea,
-  Flex,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import axios from "axios";
@@ -103,295 +102,52 @@ function KanbanTaskEditModal({
   // Using OR to switch between view-only and editable state
   return (
     <>
-      <Flex>
-        <Modal
-          isOpen={isOpen}
-          onClose={() => {
-            onClose();
-            handleEdit("closed");
-          }}
-          size={"3xl"}
-          scrollBehavior={"inside"}
-        >
-          <ModalOverlay backdropFilter={"blur(5px)"} />
-          <ModalContent overflowX={"hidden"}>
-            <ModalHeader>
-              <Text paddingLeft={"10px"} fontSize={"26px"} fontWeight={"400"}>
-                {task_name}
-              </Text>
-            </ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              {!isEditable ? (
-                <Box>
-                  <Box paddingLeft={"11px"} fontSize={"14px"}>
-                    <Text>Description: {description}</Text>
-                    <Text>Acceptance criteria: {acceptance_criteria}</Text>
-                    <Text>Status: {status[column]}</Text>
-                    <Text>Priority: P{priority}</Text>
-                    <Text>Story points: {story_points}</Text>
-                    <Text>Assigner ID: {assigner}</Text>
-                    <Text>Assignee ID: {assignee}</Text>
-                    <Text>Deadline: {end_date}</Text>
-                  </Box>
-                  <Box display={"flex"} justifyContent={"flex-end"} bottom={0}>
-                    <Button
-                      paddingBottom={"5px"}
-                      onClick={onClose}
-                      background={"transparent"}
-                      _hover={{
-                        bg: "transparent",
-                        transform: "scale(1.05)",
-                      }}
-                      fontSize={"14px"}
-                      fontWeight={"400"}
-                      color={"rgba(0,0,0,0.50)"}
-                    >
-                      Cancel
-                    </Button>
-                    {column === 2 && (
-                      <Button
-                        onClick={handleDelete}
-                        color={"#ffffff"}
-                        width={"79px"}
-                        height={"30px"}
-                        marginRight={"10px"}
-                        borderRadius={"4px"}
-                        fontSize={"14px"}
-                        background={"#ff0000"}
-                        fontWeight={"400"}
-                        _hover={{
-                          bg: "#ff000f",
-                          transform: "scale(1.05)",
-                          boxShadow: "4px 4px 10px rgba(255, 0, 0, 0.1)",
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    )}
-                    {column != 2 && (
-                      <Button
-                        onClick={handleEdit}
-                        color={"#ffffff"}
-                        width={"79px"}
-                        height={"30px"}
-                        borderRadius={"4px"}
-                        fontSize={"14px"}
-                        background={"#2a4ecb"}
-                        fontWeight={"400"}
-                        _hover={{
-                          bg: "#2a4fff",
-                          transform: "scale(1.05)",
-                          boxShadow: "4px 4px 10px rgba(0, 0, 255, 0.1)",
-                        }}
-                      >
-                        Edit
-                      </Button>
-                    )}
-                  </Box>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          onClose();
+          handleEdit("closed");
+        }}
+        size={"3xl"}
+        scrollBehavior={"inside"}
+      >
+        <ModalOverlay backdropFilter={"blur(5px)"} />
+        <ModalContent overflowX={"hidden"}>
+          <ModalHeader>
+            <Text paddingLeft={"10px"} fontSize={"26px"} fontWeight={"400"}>
+              {task_name}
+            </Text>
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {!isEditable ? (
+              <Box>
+                <Box paddingLeft={"11px"} fontSize={"14px"}>
+                  <Text>Description: {description}</Text>
+                  <Text>Acceptance criteria: {acceptance_criteria}</Text>
+                  <Text>Status: {status[column]}</Text>
+                  <Text>Priority: P{priority}</Text>
+                  <Text>Story points: {story_points}</Text>
+                  <Text>Assigner ID: {assigner}</Text>
+                  <Text>Assignee ID: {assignee}</Text>
+                  <Text>Deadline: {end_date}</Text>
                 </Box>
-              ) : (
-                <form onSubmit={handleSubmit}>
-                  <FormControl>
-                    <Box display={"flex"}>
-                      <Box paddingLeft={"10px"}>
-                        <Text
-                          fontSize={"12px"}
-                          fontWeight={"400"}
-                          color={"rgba(0,0,0,0.50)"}
-                          paddingBottom={"8px"}
-                        >
-                          Description
-                        </Text>
-                        <Textarea
-                          color={"#333333"}
-                          defaultValue={description}
-                          name={"description"}
-                          onChange={handleChange}
-                          type="textbox"
-                          textAlign={"start"}
-                          width={"420px"}
-                          height={"120px"}
-                          borderRadius={"4px"}
-                          fontSize={"14px"}
-                        />
-                        <Text
-                          marginTop={"3.5%"}
-                          fontSize={"12px"}
-                          fontWeight={"400"}
-                          color={"rgba(0,0,0,0.50)"}
-                          paddingBottom={"8px"}
-                        >
-                          Acceptance criteria
-                        </Text>
-                        <Textarea
-                          defaultValue={acceptance_criteria}
-                          name={"acceptance_criteria"}
-                          onChange={handleChange}
-                          type="textbox"
-                          textAlign={"start"}
-                          width={"420px"}
-                          height={"30px"}
-                          borderRadius={"4px"}
-                          fontSize={"14px"}
-                        />
-                        <Text
-                          marginTop={"3.5%"}
-                          fontSize={"12px"}
-                          fontWeight={"400"}
-                          color={"rgba(0,0,0,0.50)"}
-                          paddingBottom={"8px"}
-                        >
-                          Due date
-                        </Text>
-                        <Input
-                          defaultValue={end_date}
-                          name={"end_date"}
-                          onChange={handleChange}
-                          type="date"
-                          textAlign={"start"}
-                          width={"420px"}
-                          height={"30px"}
-                          borderRadius={"4px"}
-                          fontSize={"14px"}
-                        ></Input>
-                      </Box>
-                      <Box marginLeft={"50px"} paddingRight={"20px"}>
-                        <FormLabel
-                          fontSize={"12px"}
-                          fontWeight={"400"}
-                          color={"rgba(0,0,0,0.50)"}
-                        >
-                          Status
-                        </FormLabel>
-                        <Select
-                          placeholder="Select status"
-                          defaultChecked={column}
-                          id={"column"}
-                          // defaultValue={column}
-                          name={"column"}
-                          onChange={handleChange}
-                          borderRadius={"4px"}
-                          height={"32px"}
-                          width={"215px"}
-                          ref={initialRef}
-                          fontSize={"12px"}
-                        >
-                          {status.map((status, index) => (
-                            <option key={index} value={index}>
-                              {status}
-                            </option>
-                          ))}
-                        </Select>
-                        <FormLabel
-                          paddingTop={"8%"}
-                          fontSize={"12px"}
-                          fontWeight={"400"}
-                          color={"rgba(0,0,0,0.50)"}
-                        >
-                          Priority
-                        </FormLabel>
-                        <Select
-                          placeholder="Select priority"
-                          defaultChecked={priority}
-                          // defaultValue={priority}
-                          name={"priority"}
-                          onChange={handleChange}
-                          borderRadius={"4px"}
-                          height={"32px"}
-                          width={"215px"}
-                          ref={initialRef}
-                          fontSize={"12px"}
-                        >
-                          {priorityPick.map((priorityPick) => (
-                            <option key={priorityPick} value={priorityPick}>
-                              P{priorityPick}
-                            </option>
-                          ))}
-                        </Select>
-                        <FormLabel
-                          paddingTop={"8%"}
-                          fontSize={"12px"}
-                          fontWeight={"400"}
-                          color={"rgba(0,0,0,0.50)"}
-                        >
-                          Story points (Min: 1 Max:5)
-                        </FormLabel>
-                        <Input
-                          min={1}
-                          max={5}
-                          defaultValue={story_points}
-                          name={"story_points"}
-                          onChange={handleChange}
-                          borderRadius={"4px"}
-                          type={"number"}
-                          height={"32px"}
-                          width={"215px"}
-                          ref={initialRef}
-                          placeholder="Min: 1 Max: 5"
-                          fontSize={"12px"}
-                        />
-                        <FormLabel
-                          paddingTop={"8%"}
-                          fontSize={"12px"}
-                          fontWeight={"400"}
-                          color={"rgba(0,0,0,0.50)"}
-                        >
-                          Assigner
-                        </FormLabel>
-                        <Input
-                          defaultValue={assigner}
-                          name={"assigner"}
-                          onChange={handleChange}
-                          borderRadius={"4px"}
-                          type={"number"}
-                          height={"32px"}
-                          width={"215px"}
-                          ref={initialRef}
-                          placeholder="Assigner ID"
-                          fontSize={"12px"}
-                        />
-                        <FormLabel
-                          paddingTop={"8%"}
-                          fontSize={"12px"}
-                          fontWeight={"400"}
-                          color={"rgba(0,0,0,0.50)"}
-                        >
-                          Assignee
-                        </FormLabel>
-                        <Input
-                          defaultValue={assignee}
-                          name={"assignee"}
-                          onChange={handleChange}
-                          borderRadius={"4px"}
-                          type={"number"}
-                          height={"32px"}
-                          width={"215px"}
-                          ref={initialRef}
-                          placeholder="Assignee ID"
-                          fontSize={"12px"}
-                        />
-                      </Box>
-                    </Box>
-                  </FormControl>
-                </form>
-              )}
-            </ModalBody>
-            {isEditable && (
-              <ModalFooter>
-                <Box display={"flex"} justifyContent={"flex-end"}>
+                <Box display={"flex"} justifyContent={"flex-end"} bottom={0}>
                   <Button
                     paddingBottom={"5px"}
-                    onClick={handleEdit}
+                    onClick={onClose}
                     background={"transparent"}
-                    _hover={{ bg: "transparent" }}
+                    _hover={{
+                      bg: "transparent",
+                      transform: "scale(1.05)",
+                    }}
                     fontSize={"14px"}
                     fontWeight={"400"}
                     color={"rgba(0,0,0,0.50)"}
                   >
-                    Go back
+                    Cancel
                   </Button>
-                  {column == 2 && (
+                  {column === 2 && (
                     <Button
                       onClick={handleDelete}
                       color={"#ffffff"}
@@ -411,26 +167,265 @@ function KanbanTaskEditModal({
                       Delete
                     </Button>
                   )}
-                  <Button
-                    type={"submit"}
-                    onClick={onClose}
-                    color={"#ffffff"}
-                    width={"79px"}
-                    height={"30px"}
-                    borderRadius={"4px"}
-                    fontSize={"14px"}
-                    background={"#2a4ecb"}
-                    fontWeight={"400"}
-                    _hover={{ bg: "#2a4fff" }}
-                  >
-                    Save
-                  </Button>
+                  {column != 2 && (
+                    <Button
+                      onClick={handleEdit}
+                      color={"#ffffff"}
+                      width={"79px"}
+                      height={"30px"}
+                      borderRadius={"4px"}
+                      fontSize={"14px"}
+                      background={"#2a4ecb"}
+                      fontWeight={"400"}
+                      _hover={{
+                        bg: "#2a4fff",
+                        transform: "scale(1.05)",
+                        boxShadow: "4px 4px 10px rgba(0, 0, 255, 0.1)",
+                      }}
+                    >
+                      Edit
+                    </Button>
+                  )}
                 </Box>
-              </ModalFooter>
+              </Box>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <FormControl>
+                  <Box display={"flex"}>
+                    <Box paddingLeft={"10px"}>
+                      <Text
+                        fontSize={"12px"}
+                        fontWeight={"400"}
+                        color={"rgba(0,0,0,0.50)"}
+                        paddingBottom={"8px"}
+                      >
+                        Description
+                      </Text>
+                      <Textarea
+                        color={"#333333"}
+                        defaultValue={description}
+                        name={"description"}
+                        onChange={handleChange}
+                        type="textbox"
+                        textAlign={"start"}
+                        width={"420px"}
+                        height={"120px"}
+                        borderRadius={"4px"}
+                        fontSize={"14px"}
+                      />
+                      <Text
+                        marginTop={"3.5%"}
+                        fontSize={"12px"}
+                        fontWeight={"400"}
+                        color={"rgba(0,0,0,0.50)"}
+                        paddingBottom={"8px"}
+                      >
+                        Acceptance criteria
+                      </Text>
+                      <Textarea
+                        defaultValue={acceptance_criteria}
+                        name={"acceptance_criteria"}
+                        onChange={handleChange}
+                        type="textbox"
+                        textAlign={"start"}
+                        width={"420px"}
+                        height={"30px"}
+                        borderRadius={"4px"}
+                        fontSize={"14px"}
+                      />
+                      <Text
+                        marginTop={"3.5%"}
+                        fontSize={"12px"}
+                        fontWeight={"400"}
+                        color={"rgba(0,0,0,0.50)"}
+                        paddingBottom={"8px"}
+                      >
+                        Due date
+                      </Text>
+                      <Input
+                        defaultValue={end_date}
+                        name={"end_date"}
+                        onChange={handleChange}
+                        type="date"
+                        textAlign={"start"}
+                        width={"420px"}
+                        height={"30px"}
+                        borderRadius={"4px"}
+                        fontSize={"14px"}
+                      ></Input>
+                    </Box>
+                    <Box marginLeft={"50px"} paddingRight={"20px"}>
+                      <FormLabel
+                        fontSize={"12px"}
+                        fontWeight={"400"}
+                        color={"rgba(0,0,0,0.50)"}
+                      >
+                        Status
+                      </FormLabel>
+                      <Select
+                        placeholder="Select status"
+                        defaultChecked={column}
+                        id={"column"}
+                        // defaultValue={column}
+                        name={"column"}
+                        onChange={handleChange}
+                        borderRadius={"4px"}
+                        height={"32px"}
+                        width={"215px"}
+                        ref={initialRef}
+                        fontSize={"12px"}
+                      >
+                        {status.map((status, index) => (
+                          <option key={index} value={index}>
+                            {status}
+                          </option>
+                        ))}
+                      </Select>
+                      <FormLabel
+                        paddingTop={"8%"}
+                        fontSize={"12px"}
+                        fontWeight={"400"}
+                        color={"rgba(0,0,0,0.50)"}
+                      >
+                        Priority
+                      </FormLabel>
+                      <Select
+                        placeholder="Select priority"
+                        defaultChecked={priority}
+                        // defaultValue={priority}
+                        name={"priority"}
+                        onChange={handleChange}
+                        borderRadius={"4px"}
+                        height={"32px"}
+                        width={"215px"}
+                        ref={initialRef}
+                        fontSize={"12px"}
+                      >
+                        {priorityPick.map((priorityPick) => (
+                          <option key={priorityPick} value={priorityPick}>
+                            P{priorityPick}
+                          </option>
+                        ))}
+                      </Select>
+                      <FormLabel
+                        paddingTop={"8%"}
+                        fontSize={"12px"}
+                        fontWeight={"400"}
+                        color={"rgba(0,0,0,0.50)"}
+                      >
+                        Story points (Min: 1 Max:5)
+                      </FormLabel>
+                      <Input
+                        min={1}
+                        max={5}
+                        defaultValue={story_points}
+                        name={"story_points"}
+                        onChange={handleChange}
+                        borderRadius={"4px"}
+                        type={"number"}
+                        height={"32px"}
+                        width={"215px"}
+                        ref={initialRef}
+                        placeholder="Min: 1 Max: 5"
+                        fontSize={"12px"}
+                      />
+                      <FormLabel
+                        paddingTop={"8%"}
+                        fontSize={"12px"}
+                        fontWeight={"400"}
+                        color={"rgba(0,0,0,0.50)"}
+                      >
+                        Assigner
+                      </FormLabel>
+                      <Input
+                        defaultValue={assigner}
+                        name={"assigner"}
+                        onChange={handleChange}
+                        borderRadius={"4px"}
+                        type={"number"}
+                        height={"32px"}
+                        width={"215px"}
+                        ref={initialRef}
+                        placeholder="Assigner ID"
+                        fontSize={"12px"}
+                      />
+                      <FormLabel
+                        paddingTop={"8%"}
+                        fontSize={"12px"}
+                        fontWeight={"400"}
+                        color={"rgba(0,0,0,0.50)"}
+                      >
+                        Assignee
+                      </FormLabel>
+                      <Input
+                        defaultValue={assignee}
+                        name={"assignee"}
+                        onChange={handleChange}
+                        borderRadius={"4px"}
+                        type={"number"}
+                        height={"32px"}
+                        width={"215px"}
+                        ref={initialRef}
+                        placeholder="Assignee ID"
+                        fontSize={"12px"}
+                      />
+                    </Box>
+                  </Box>
+                </FormControl>
+                <ModalFooter>
+                  <Box display={"flex"} justifyContent={"flex-end"}>
+                    <Button
+                      paddingBottom={"5px"}
+                      onClick={handleEdit}
+                      background={"transparent"}
+                      _hover={{ bg: "transparent" }}
+                      fontSize={"14px"}
+                      fontWeight={"400"}
+                      color={"rgba(0,0,0,0.50)"}
+                    >
+                      Go back
+                    </Button>
+                    {column == 2 && (
+                      <Button
+                        onClick={handleDelete}
+                        color={"#ffffff"}
+                        width={"79px"}
+                        height={"30px"}
+                        marginRight={"10px"}
+                        borderRadius={"4px"}
+                        fontSize={"14px"}
+                        background={"#ff0000"}
+                        fontWeight={"400"}
+                        _hover={{
+                          bg: "#ff000f",
+                          transform: "scale(1.05)",
+                          boxShadow: "4px 4px 10px rgba(255, 0, 0, 0.1)",
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    )}
+                    <Button
+                      type={"submit"}
+                      onClick={onClose}
+                      color={"#ffffff"}
+                      width={"79px"}
+                      height={"30px"}
+                      borderRadius={"4px"}
+                      fontSize={"14px"}
+                      background={"#2a4ecb"}
+                      fontWeight={"400"}
+                      _hover={{ bg: "#2a4fff" }}
+                    >
+                      Save
+                    </Button>
+                  </Box>
+                </ModalFooter>
+              </form>
             )}
-          </ModalContent>
-        </Modal>
-      </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

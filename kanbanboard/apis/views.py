@@ -101,9 +101,9 @@ class ListView(CrudOperationsView):
 #     serializer_class = BoardSerializer
 
 # Commit CRUD operations.
-class CommitView(CrudOperationsView):
-    queryset = Commit.objects.all()
-    serializer_class = CommitSerializer
+# class CommitView(CrudOperationsView):
+#     queryset = Commit.objects.all()
+#     serializer_class = CommitSerializer
 
 class LoginAPIView(APIView):
     def post(self, request):
