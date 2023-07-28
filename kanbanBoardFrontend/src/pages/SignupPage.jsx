@@ -39,7 +39,7 @@ function SignupPage() {
       ) == false
     ) {
       const response = await axios.post(
-        "http://127.0.0.1:8000/kanban/signup/",
+        "https://127.0.0.1:8000/kanban/signup/",
         {
           username: username,
           pass_field: pass_field,

@@ -61,7 +61,7 @@ function KanbanTaskModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await axios.post(
-      "http://127.0.0.1:8000/kanban/tasks/",
+      "https://127.0.0.1:8000/kanban/tasks/",
       formData
     );
     window.location.reload(true);

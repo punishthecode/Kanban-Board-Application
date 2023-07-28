@@ -35,7 +35,7 @@ function KanbanTask({ column_id }) {
 
   //API call to fetch all the tasks
   const fetchData = async () => {
-    const response = await fetch("http://127.0.0.1:8000/kanban/tasks/");
+    const response = await fetch("https://127.0.0.1:8000/kanban/tasks/");
     const resultJson = await response.json();
     setTasks(resultJson);
   };

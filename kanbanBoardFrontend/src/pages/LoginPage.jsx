@@ -13,13 +13,13 @@ import {
 } from "@chakra-ui/react";
 import "../App.css";
 import axios from "axios";
+import PropTypes from "prop-types";
 
 // Login page
-function LoginPage() {
+function LoginPage({ setToken }) {
   // Hook to handle use credentialsS
   const [username, setUsername] = useState("");
   const [pass_field, setPass_Field] = useState("");
-
   //Custom hook to navigate between routers
   const navigate = useNavigate();
 
@@ -32,15 +32,21 @@ function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:8000/kanban/login/", {
-        username,
-        pass_field,
-      });
+      const response = await axios.post(
+        "https://127.0.0.1:8000/kanban/login/",
+        {
+          username,
+          pass_field,
+        }
+      );
       if (response.status === 200) {
-        console.log("Login successful");
-        console.log(response.data.username);
+        setToken({
+          username: response.data.username,
+          // user_id: response.data.user_id,
+        });
+        window.location.reload();
         setUsername(response.data.username);
-        navigate(`/kanban?username=${response.data.username}`);
+        // navigate(`/kanban?username=${response.data.username}`);
       } else {
         alert("Invalid Credentials");
       }
@@ -144,5 +150,9 @@ function LoginPage() {
     </Center>
   );
 }
+
+LoginPage.propTypes = {
+  setToken: PropTypes.func.isRequired,
+};
 
 export default LoginPage;

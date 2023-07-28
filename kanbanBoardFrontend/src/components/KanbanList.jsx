@@ -8,7 +8,7 @@ function KanbanList({ column }) {
 
   //API call to get lists (To-do, In progress, Completed)
   const fetchList = async () => {
-    const response = await fetch("http://127.0.0.1:8000/kanban/lists");
+    const response = await fetch("https://127.0.0.1:8000/kanban/lists");
     const resultJson = await response.json();
     setLists(resultJson);
   };

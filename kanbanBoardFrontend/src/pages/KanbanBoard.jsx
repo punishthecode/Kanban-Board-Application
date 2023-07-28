@@ -9,17 +9,24 @@ import { motion } from "framer-motion";
 // Main dashboard with all components
 function KanbanBoard() {
   // Passing the username and user_id to display on the dashboard
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const username = searchParams.get("username") || "User";
+  // const location = useLocation();
+  // const searchParams = new URLSearchParams(location.search);
+  // const username = searchParams.get("username") || "User";
+
+  const [username, setUsername] = useState({});
+
+  useEffect(() => {
+    const userName = sessionStorage.getItem("user");
+    setUsername(JSON.parse(userName));
+  }, []);
 
   const [count, setCount] = useState([]);
   const [lists, setLists] = useState([]);
 
   // API call to fetch all the lists and tasks
   const fetchData = async () => {
-    const listResponse = await fetch("http://127.0.0.1:8000/kanban/lists");
-    const taskResponse = await fetch("http://127.0.0.1:8000/kanban/tasks/");
+    const listResponse = await fetch("https://127.0.0.1:8000/kanban/lists");
+    const taskResponse = await fetch("https://127.0.0.1:8000/kanban/tasks/");
     const listJson = await listResponse.json();
     const taskJson = await taskResponse.json();
     setLists(listJson);
@@ -34,7 +41,9 @@ function KanbanBoard() {
 
   // Navigate users to login page after logout
   const handleLogout = () => {
-    navigate("/login");
+    // navigate("/login");
+    sessionStorage.clear();
+    window.location.reload();
   };
 
   // Columns and tasked mapped based on the progress
@@ -80,7 +89,7 @@ function KanbanBoard() {
           {capitalizeFirstLetter(username)}'s tasks
         </Text> */}
         <Text fontSize={"24px"} fontWeight={"400"}>
-          Welcome {username}
+          Welcome {username.username}
         </Text>
       </motion.div>
       <KanbanTaskModal />

@@ -7,15 +7,29 @@ import NotFoundPage from "./pages/NotFoundPage";
 import SignupPage from "./pages/SignupPage";
 import "./App.css";
 
+function setToken(userToken) {
+  sessionStorage.setItem("user", JSON.stringify(userToken));
+}
+
+function getToken() {
+  const tokenString = sessionStorage.getItem("user");
+  const userToken = JSON.parse(tokenString);
+  return userToken;
+}
 // App component that contains urls and hanldes routes
 function App() {
+  const token = getToken();
   const router = createBrowserRouter([
     {
-      path: "/login",
-      exact: true,
-      element: <LoginPage />,
+      path: "/",
+      element: !token ? <LoginPage setToken={setToken} /> : <KanbanBoard />,
     },
-    { path: "/kanban", element: <KanbanBoard /> },
+    // {
+    //   path: "/login",
+    //   exact: true,
+    //   element: <LoginPage />,
+    // },
+    // { path: "/kanban", element: <KanbanBoard /> },
     { path: "*", element: <NotFoundPage /> },
     { path: "/signup", element: <SignupPage /> },
   ]);
@@ -26,5 +40,4 @@ function App() {
     </ChakraProvider>
   );
 }
-
 export default App;

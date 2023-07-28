@@ -56,7 +56,7 @@ function KanbanTaskEditModal({
   const handleDelete = async (e) => {
     e.preventDefault();
     const response = await axios.delete(
-      `http://127.0.0.1:8000/kanban/tasks/${task_id}/`
+      `https://127.0.0.1:8000/kanban/tasks/${task_id}/`
     );
     window.location.reload(true);
   };
@@ -64,7 +64,7 @@ function KanbanTaskEditModal({
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await axios.patch(
-      `http://127.0.0.1:8000/kanban/tasks/${task_id}/`,
+      `https://127.0.0.1:8000/kanban/tasks/${task_id}/`,
       formData
     );
     window.location.reload(true);
